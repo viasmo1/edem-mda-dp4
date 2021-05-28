@@ -1,2 +1,7 @@
-# edem-mda-dp4
-Repository for DP4
+# Data Project 4
+
+## Directrices de trabajo
+
+- Clone del repositorio
+- Cada equipo modifica su carpeta
+- Push a master
