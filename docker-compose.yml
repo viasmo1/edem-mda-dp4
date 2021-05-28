@@ -1,0 +1,67 @@
+version: '1'
+
+# Infrastructure required for the Data Project 4
+# Authors: EQUIPO 1. ARQ E ING. 
+
+services:
+  
+  cassandra:
+    image: cassandra:latest
+
+  cqlsh:
+    image: cassandra:latest
+    entrypoint: cqlsh cassandra
+  
+  #¿almacenaje?
+  zeppelin:
+    image: apache/zeppelin:0.8.1
+    ports: 
+      - 9999:8080
+
+  #Nifi para ingestión
+  nifi:
+    image: apache/nifi:latest
+    ports:
+      - 8888:8080
+
+    
+  nifi:
+    image: apache/nifi:latest
+    container_name: nifi
+    restart: always
+    ports:
+      - 8080:8080
+    
+  nifi-registry:
+    image: apache/nifi-registry:latest
+    container_name: nifiregistry
+    restart: always
+    ports:
+      - 18080:18080
+
+
+      
+  # Jupyter: Notebook Analytics
+  jupyter:
+    image: 'jupyter/datascience-notebook:latest'
+    hostname: jupyter
+    container_name: jupyter
+    environment:
+      - JUPYTER_TOKEN=edem
+    ports:
+      - '8888:8888'
+  
+  # cAdvisor: Docker Monitor
+  monitor:
+    image: 'google/cadvisor:latest'
+    hostname: monitor
+    ports:
+      - '8080:8080'
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+
+
