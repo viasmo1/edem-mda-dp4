@@ -1,2 +1,2 @@
 # edem-mda-dp4
-Repository for DP4
+Deploy a Flask application with Docker
