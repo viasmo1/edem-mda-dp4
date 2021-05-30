@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, abort, url_for
 
-app = Flask(__name__,template_folder='.')
+app = Flask(__name__)
 
 @app.route("/")
 
