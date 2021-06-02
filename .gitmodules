@@ -1,0 +1,3 @@
+[submodule "team_models/dataproject4_models"]
+	path = team_models/dataproject4_models
+	url = https://github.com/juanluishg/dataproject4_models
