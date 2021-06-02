@@ -3,7 +3,6 @@
 FROM ubuntu:18.04
 
 RUN apt-get update -y && \
-    libopencv-dev \
     apt-get install -y python3 &&\
     apt-get install -y python3-pip &&\
     apt install -y libsm6 libxext6 &&\
