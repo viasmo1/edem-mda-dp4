@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request
 import pickle
 from swagger.app import blueprint as app_endpoints
 import base64
+from datetime import datetime
 
 # load model
 model = pickle.load(open('models/model.pkl','rb'))
@@ -31,7 +32,9 @@ def predict():
         img = data["message"]
 
         base64_img_bytes = img.encode('utf-8')
-        with open('../../bucket_images/decoded_image.png', 'wb') as file_to_save:
+        now = datetime.now()
+        file_name_st = now.strftime("%d%m%Y%H%M%S")
+        with open('../../bucket_images/'+file_name_st+'.png', 'wb') as file_to_save:
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             file_to_save.write(decoded_image_data)
 
