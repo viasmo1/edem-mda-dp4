@@ -2,7 +2,7 @@ import pandas as pd
 from flask import Flask, jsonify, request
 import pickle
 from swagger.app import blueprint as app_endpoints
-
+import base64
 
 # load model
 model = pickle.load(open('models/model.pkl','rb'))
@@ -28,15 +28,23 @@ def predict():
         # get data
         data = request.get_json(force=True)
 
+        img = data["message"]
+
+        base64_img_bytes = img.encode('utf-8')
+        with open('../../bucket_images/decoded_image.png', 'wb') as file_to_save:
+            decoded_image_data = base64.decodebytes(base64_img_bytes)
+            file_to_save.write(decoded_image_data)
+
+        #Output prediction
         # convert data into dataframe
-        data.update((x, [y]) for x, y in data.items())
-        data_df = pd.DataFrame.from_dict(data)
+        #data.update((x, [y]) for x, y in data.items())
+        #data_df = pd.DataFrame.from_dict(data)
 
         # predictions
-        result = model.predict(data_df)
+        #result = model.predict(data_df)
 
         # send back to browser
-        output = {'results': int(result[0])}
+        output = {'results': int(15)}
 
         # return data
         return jsonify(results=output)
