@@ -18,17 +18,21 @@
             </nav>
             <img src="{{ url_for('static',filename='menu.png') }}" class="menu-icon">
         </div>
-
+        <center>
         <div class="row">
             <div class="col">
-                <h1>Take A Foto</h1>
-                <p>INSTRUCTION OF TAKING PHOTOS: Please xxxxxxxx </p>
-                <button><a href="{{ url_for('capture') }}">Take a photo</a></button>
+                <h1>START</h1>
+                <p>Start sentiment analysis capture </p>
+                <button><a href="{{ url_for('capture') }}">CAMERA</a></button>
             </div>
-            <div id="camera">
-            <img src="{{ url_for('video_feed') }}" alt="video feed">
+            <div class="col">
+                <h1>RESULTS</h1>
+                <p>Sentiment analysis results</p>
+                <button><a href="{{ url_for('dashboard') }}">DASHBOARD</a></button>
             </div>
         </div>
+        <center>
+
     </div>
 </body>
 </html>

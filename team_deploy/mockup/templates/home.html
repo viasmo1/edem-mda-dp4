@@ -1,0 +1,23 @@
+<html>
+    <body bgcolor=#33C0FF>
+
+        <center>
+
+        <h1> SENTIMENT ANALYSIS </h1>
+        
+        <br> Cargue su imagen para hacer la predicción <br>
+        
+        <br><br>
+        
+        <form method="POST", action="{{url_for('home')}}">
+           <b> Base64 imagen :  <input type="text", name='base64image', placeholder="enter 1"> <br><br></b>
+          <br><br>
+          <input type="submit" , value='predict!' >
+        </form>
+
+        <img src="{{url_for('static', filename='image.png')}}"  alt="image"  width = "250" height = "250">
+        
+    </center>
+
+    </body>
+</html>
