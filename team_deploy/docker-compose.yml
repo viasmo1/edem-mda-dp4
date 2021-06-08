@@ -7,6 +7,9 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
-      
+
+    volumes:
+      - ./bucket_images/:/code/images
+
     ports:
       - "5000:5000"
