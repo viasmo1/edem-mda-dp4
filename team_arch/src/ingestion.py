@@ -1,12 +1,16 @@
 import os
 import requests
 
-os.chdir("./images")
+print(os.getcwd())
+os.chdir("images")
+print(os.listdir())
 
 url = "https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg"
 page = requests.get(url)
 
 f_ext = os.path.splitext(url)[-1]
-f_name = "img{}".format(f_ext)
-with open(f_name, "wb") as f:
-    f.write(page.content)
+
+with open("test.jpg", "wb") as file_to_save:
+    file_to_save.write(page.content)
+
+print(os.listdir())
