@@ -32,13 +32,12 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-
 @app.route('/video_feed/')
+
 def video_feed():
     camera = get_camera()
     return Response(gen(camera),
         mimetype='multipart/x-mixed-replace; boundary=frame')
-
 
 # route for capturing picture
 @app.route('/capture/')
@@ -50,7 +49,6 @@ def capture():
 
 def stamp_file(timestamp):
     return 'captures/' + timestamp +".jpg"
-
 
 @app.route('/capture/image/<timestamp>', methods=['POST', 'GET'])
 def show_capture(timestamp):
@@ -68,6 +66,10 @@ def show_capture(timestamp):
 
     return render_template('capture.html',
         stamp=timestamp, path=path, email_msg=email_msg)
+
+@app.route('/dashboard/')
+def dashboard():
+    return render_template('dashboard.html')
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
