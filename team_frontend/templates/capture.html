@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta name = "viewport" content="width=device-width,initial-scale=1.0">
+    <title>Data Project 4</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <img src="{{ url_for('static',filename='edem.png') }}" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="">HOME</a></li>
+                    <li><a href="">ABOUT</a></li>
+                    <li><a href="">CONTACT US</a></li>
+                </ul>
+            </nav>
+            <img src="{{ url_for('static',filename='menu.png') }}" class="menu-icon">
+        </div>
+
+    <center>
+      <div id="camera">
+        <img src="{{ url_for('video_feed') }}" alt="video feed">
+      </div>
+      <div id="camera2">
+	     <img src="{{ url_for('static', filename=path) }}" alt="capture">
+      </div>
+      <div class="col">
+        <button><a href="{{ url_for('root') }}">Back</a></button> 
+        <button><a href="{{ url_for('capture') }}">Take a photo</a></button>
+      </div>
+    </center>
+  </body>
+</html>
