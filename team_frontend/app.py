@@ -16,7 +16,6 @@ def get_camera():
 
     return camera
 
-
 @app.route("/")
 def root():
     return redirect(url_for('index'))
@@ -41,10 +40,10 @@ def video_feed():
 
 # route for capturing picture
 @app.route('/capture/')
-
 def capture():
     camera = get_camera()
     stamp = camera.capture()
+    
     return redirect(url_for('show_capture', timestamp=stamp))
 
 def stamp_file(timestamp):
@@ -62,14 +61,14 @@ def show_capture(timestamp):
                 request.form['email'])
         else:
             email_msg = "Email field empty!"
-
-
+    camera = get_camera()
+    emotion = camera.emotion()
     return render_template('capture.html',
-        stamp=timestamp, path=path, email_msg=email_msg)
+        stamp=timestamp, path=path, email_msg=email_msg, emotion=emotion)
 
 @app.route('/dashboard/')
 def dashboard():
     return render_template('dashboard.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True,port = 5001, host='0.0.0.0')
