@@ -3,10 +3,13 @@ import base64
 import requests
 import datetime
 from time import localtime, strftime
+import json
 
 class Camera(object):
     CAPTURES_DIR = "static/captures/"
     RESIZE_RATIO = 1.0
+
+    state = ""
 
     def __init__(self):
         self.video = cv.VideoCapture(0)
@@ -48,7 +51,12 @@ class Camera(object):
             ret, jpeg = cv.imencode('.jpg', frame)
             jpeg.tobytes()
             result = self.post_method(jpeg.tobytes())
+            ab = result.json()
+            self.state=ab['results']['emotions']
         filename = Camera.CAPTURES_DIR + timestamp +".jpg"
         if not cv.imwrite(filename, frame):
             raise RuntimeError("Unable to capture image "+timestamp)
         return timestamp
+    
+    def emotion(self):
+        return self.state

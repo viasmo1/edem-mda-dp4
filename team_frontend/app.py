@@ -16,7 +16,6 @@ def get_camera():
 
     return camera
 
-
 @app.route("/")
 def root():
     return redirect(url_for('index'))
@@ -41,10 +40,10 @@ def video_feed():
 
 # route for capturing picture
 @app.route('/capture/')
-
 def capture():
     camera = get_camera()
     stamp = camera.capture()
+    emotion = camera.emotion()
     return redirect(url_for('show_capture', timestamp=stamp))
 
 def stamp_file(timestamp):
