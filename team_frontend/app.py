@@ -43,7 +43,7 @@ def video_feed():
 def capture():
     camera = get_camera()
     stamp = camera.capture()
-    emotion = camera.emotion()
+    
     return redirect(url_for('show_capture', timestamp=stamp))
 
 def stamp_file(timestamp):
@@ -61,10 +61,10 @@ def show_capture(timestamp):
                 request.form['email'])
         else:
             email_msg = "Email field empty!"
-
-
+    camera = get_camera()
+    emotion = camera.emotion()
     return render_template('capture.html',
-        stamp=timestamp, path=path, email_msg=email_msg)
+        stamp=timestamp, path=path, email_msg=email_msg, emotion=emotion)
 
 @app.route('/dashboard/')
 def dashboard():
