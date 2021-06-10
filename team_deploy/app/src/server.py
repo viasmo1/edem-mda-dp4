@@ -4,6 +4,8 @@ import pickle
 from swagger.app import blueprint as app_endpoints
 import base64
 from datetime import datetime
+from skimage import color
+from skimage import io
 
 import tensorflow as tf
 import numpy as np
@@ -11,6 +13,9 @@ from keras import backend
 from tensorflow.keras import models
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
+
+
+
 
 # app
 app = Flask(__name__)
@@ -62,20 +67,31 @@ def predict():
 
         # predictions
         #Load Model
-        new_model = tf.keras.models.load_model('./models/score_3249.h5', custom_objects={'fbeta': fbeta})
+        with open('FacialExpression-model.json', 'r') as json_file:
+            json_savedModel= json_file.read()
+
+            # Cargamos la arquitectura del modelo
+        new_model = tf.keras.models.model_from_json(json_savedModel)
+        new_model.load_weights('FacialExpression_weights.hdf5')
+        new_model.compile(optimizer = "Adam", loss = "categorical_crossentropy", metrics = ["accuracy"])
 
         #Load image
         photo = load_img('../../bucket_images/'+file_name_st+'.png', target_size=(128,128))
         # convert to numpy array
-        photo = img_to_array(photo, dtype='uint8')
 
-        X = np.reshape(photo, (1,128,128,3))
+        # Blanco y negro
+        imgGray = color.rgb2gray(photo)
+
+        #redimensionado
+        resize_img = resize_img.reshape(1,96,96,1)
+
+        #Predecimos
+        resultados = new_model.predict(resize_img)
 
         # output
-        tags = new_model.predict(X)
-        tags.argmax()
-        list_emotions = ['Affection','Anger','Annoyance', 'Anticipation', 'Aversion', 'Confidence', 'Disapproval', 'Disconnection', 'Disquietment', 'Doubt/Confusion', 'Embarrassment', 'Engagement', 'Esteem', 'Excitement', 'Fatigue', 'Fear', 'Happiness', 'Pain', 'Peace', 'Pleasure', 'Sadness', 'Sensitivity', 'Suffering', 'Surprise', 'Sympathy', 'Yearning']
-        output = {'emotions': list_emotions[tags.argmax()], "score": 0.3249}
+        list_emotions = {0:'Ira', 1:'Odio', 2:'Tristeza', 3:'Felicidad', 4: 'Sorpresa'}
+
+        output = {'emotions': list_emotions[resultados.argmax()], "score": -0.3249}
 
         # return data
         return jsonify(results=output)
