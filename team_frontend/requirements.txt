@@ -2,5 +2,6 @@ Flask==0.10.1
 scikit-build
 cmake
 wheel
-opencv-python==3.4.0.12
+opencv-python>=3.4.0.12
 camera
+requests
