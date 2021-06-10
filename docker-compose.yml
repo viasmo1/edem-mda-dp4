@@ -3,6 +3,17 @@ version: "3"
 # Infrastructure required for the Data Project 4
 
 services:
+
+  ingestion:
+    container_name: ingestion
+
+    build:
+      context: ./team_arch
+      dockerfile: Dockerfile
+
+    volumes:
+      - ./bucket_images:/ingestion/images
+
   
   maas:
     container_name: maas
@@ -16,14 +27,3 @@ services:
 
     ports:
       - "5000:5000"
-
-
-  ingestion:
-    container_name: ingestion
-
-    build:
-      context: ./team_arch
-      dockerfile: Dockerfile
-
-    volumes:
-      - ./bucket_images:/ingestion/images
