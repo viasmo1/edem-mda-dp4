@@ -1,7 +1,15 @@
 # Data Project 4
 
-## Directrices de trabajo
+## Pasos a seguir para lanzar el servicio
 
-- Clone del repositorio
-- Cada equipo modifica su carpeta
-- Push a master
+- Lanzar el archivo docker-compose.yml:
+
+```
+docker-compose up -d
+```
+
+- Lanzar el servicio app.py dentro de la carpeta team_frontend:
+
+```
+python3 ./team_frontend/app.py
+```

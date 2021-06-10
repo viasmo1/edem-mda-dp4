@@ -1,16 +1,10 @@
 import os
 import requests
+from zipfile import ZipFile
+from io import BytesIO
 
-print(os.getcwd())
-os.chdir("images")
-print(os.listdir())
+url = "https://github.com/lggx/Face_expression_recognition/raw/main/fer2013.zip"
+response = requests.get(url)
 
-url = "https://i.pinimg.com/originals/83/f9/37/83f937b69f30bb886ab8a03390da6771.jpg"
-page = requests.get(url)
-
-f_ext = os.path.splitext(url)[-1]
-
-with open("test.jpg", "wb") as file_to_save:
-    file_to_save.write(page.content)
-
-print(os.listdir())
+z = ZipFile(BytesIO(response.content))
+z.extractall("./images/initial_dataset")
