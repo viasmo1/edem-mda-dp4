@@ -2,9 +2,10 @@ import os
 import requests
 from zipfile import ZipFile
 from io import BytesIO
-import numpy as np
-import pandas as pd
-import cv2
+
+# import numpy as np
+# import pandas as pd
+# import cv2
 
 url = "https://github.com/lggx/Face_expression_recognition/raw/main/fer2013.zip"
 response = requests.get(url)
