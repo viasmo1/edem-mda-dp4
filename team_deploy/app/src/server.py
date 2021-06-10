@@ -82,11 +82,14 @@ def predict():
         # Blanco y negro
         imgGray = color.rgb2gray(photo)
 
+        # 1er redimensionado
+        resize_img = imgGray.reshape(96,96)
+
         #redimensionado
-        resize_img = resize_img.reshape(1,96,96,1)
+        resize_img2 = resize_img.reshape(1,96,96,1)
 
         #Predecimos
-        resultados = new_model.predict(resize_img)
+        resultados = new_model.predict(resize_img2)
 
         # output
         list_emotions = {0:'Ira', 1:'Odio', 2:'Tristeza', 3:'Felicidad', 4: 'Sorpresa'}
