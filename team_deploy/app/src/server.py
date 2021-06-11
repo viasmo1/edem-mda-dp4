@@ -1,33 +1,26 @@
 import pandas as pd
 from flask import Flask, jsonify, request
-import pickle
 from swagger.app import blueprint as app_endpoints
 import base64
 from datetime import datetime
 from skimage import color
 from skimage import io
 
+import cv2
 import tensorflow as tf
 import numpy as np
-from keras import backend
-from tensorflow.keras import models
-from tensorflow.keras.preprocessing.image import load_img
-from tensorflow.keras.preprocessing.image import img_to_array
 from PIL import Image
-import cv2
-
-
 
 
 # app
 app = Flask(__name__)
-app.config['RESTPLUS_MASK_SWAGGER'] = False
+app.config["RESTPLUS_MASK_SWAGGER"] = False
 app.register_blueprint(app_endpoints)
 
 # routes
-@app.route('/prediction', methods=['GET', 'POST'])
+@app.route("/prediction", methods=["GET", "POST"])
 
-#def fbeta(y_true, y_pred, beta=2):
+# def fbeta(y_true, y_pred, beta=2):
 #            # clip predictions
 #            y_pred = backend.clip(y_pred, 0, 1)
 #            # calculate elements
@@ -43,69 +36,82 @@ app.register_blueprint(app_endpoints)
 #            fbeta_score = backend.mean((1 + bb) * (p * r) / (bb * p + r + backend.epsilon()))
 #            return fbeta_score
 
+
 def predict():
 
     if request.method == "GET":
         return {
-            'message': 'This endpoint should return past predictions',
-            'method': request.method
+            "message": "This endpoint should return past predictions",
+            "method": request.method,
         }
-    
+
     if request.method == "POST":
-        
+
         # get data
         data = request.get_json(force=True)
 
         img = data["message"]
 
-        base64_img_bytes = img.encode('utf-8')
+        base64_img_bytes = img.encode("utf-8")
         now = datetime.now()
         file_name_st = now.strftime("%d%m%Y%H%M%S")
-        with open('../../images/'+file_name_st+'.png', 'wb') as file_to_save: #bucket_
+        with open("./images/" + file_name_st + ".png", "wb") as file_to_save:  # bucket_
             decoded_image_data = base64.decodebytes(base64_img_bytes)
             file_to_save.write(decoded_image_data)
 
-        #Output prediction
+        # Output prediction
 
         # predictions
-        #Load Model
-        with open(r'C:\Users\20rd1\Desktop\computer_vision\edem-mda-dp4\team_deploy\app\src\models\FacialExpression-model.json', 'r') as json_file:
-            json_savedModel= json_file.read()
+        # Load Model
+        with open("./models/FacialExpression-model.json", "r") as json_file:
+            json_savedModel = json_file.read()
 
             # Cargamos la arquitectura del modelo
         new_model = tf.keras.models.model_from_json(json_savedModel)
-        new_model.load_weights(r'C:\Users\20rd1\Desktop\computer_vision\edem-mda-dp4\team_deploy\app\src\models\FacialExpression_weights.hdf5')
-        new_model.compile(optimizer = "Adam", loss = "categorical_crossentropy", metrics = ["accuracy"])
+        new_model.load_weights("./models/FacialExpression_weights.hdf5")
+        new_model.compile(
+            optimizer="Adam", loss="categorical_crossentropy", metrics=["accuracy"]
+        )
 
-        #Load image
-        def load_image( infilename ) :
-            img = Image.open( infilename )
+        # Load image
+        def load_image(infilename):
+            img = Image.open(infilename)
             img.load()
-            data = np.asarray( img, dtype="int32" )
+            data = np.asarray(img, dtype="int32")
             return data
-        #photo = load_img('../../images/'+file_name_st+'.png', target_size=(128,128)) #bucket_
-        photo = load_image('../../images/'+file_name_st+'.png') #'../../images/'+file_name_st+'.png'
+
+        # photo = load_img('../../images/'+file_name_st+'.png', target_size=(128,128)) #bucket_
+        photo = load_image(
+            "./images/" + file_name_st + ".png"
+        )  #'../../images/'+file_name_st+'.png'
         # convert to numpy array
 
         # Blanco y negro
         imgGray = color.rgb2gray(photo)
 
         # 1er redimensionado
-        resize_img = cv2.resize(imgGray  , (96 , 96))
+        resize_img = cv2.resize(imgGray, (96, 96))
 
-        #redimensionado
-        resize_img2 = resize_img.reshape(1,96,96,1)
+        # redimensionado
+        resize_img2 = resize_img.reshape(1, 96, 96, 1)
 
-        #Predecimos
+        # Predecimos
         resultados = new_model.predict(resize_img2)
 
         # output
-        list_emotions = {0:'Ira', 1:'Odio', 2:'Tristeza', 3:'Felicidad', 4: 'Sorpresa'}
+        list_emotions = {
+            0: "Ira",
+            1: "Odio",
+            2: "Tristeza",
+            3: "Felicidad",
+            4: "Sorpresa",
+        }
 
-        output = {'emotions': list_emotions[resultados.argmax()], "score": -0.3249}
+        output = {"emotions": list_emotions[resultados.argmax()], "score": -0.3249}
 
         # return data
         return jsonify(results=output)
 
-if __name__ == '__main__':
-    app.run(port = 5000, debug=True, host='0.0.0.0')
+
+if __name__ == "__main__":
+    app.run(port=5000, debug=True, host="0.0.0.0")
