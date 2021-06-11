@@ -8,7 +8,6 @@ from camera import Camera
 app = Flask(__name__)
 camera = None
 
-
 def get_camera():
     global camera
     if not camera:

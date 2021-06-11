@@ -10,20 +10,37 @@
 <body>
     <div class="container">
         <div class="navbar">
-            <img src="{{ url_for('static',filename='edem.png') }}" class="logo">
+            <img src="{{ url_for('static',filename='logo.png') }}" class="logo">
             <nav>
                 <ul>
-                    <li><a href="">HOME</a></li>
+                    <li><a href="{{ url_for('root') }}">HOME</a></li>
                     <li><a href="">ABOUT</a></li>
                     <li><a href="">CONTACT US</a></li>
                 </ul>
             </nav>
             <img src="{{ url_for('static',filename='menu.png') }}" class="menu-icon">
         </div>
+        <div class="row">
+            <div class="col">
+                <center><h1>To Be Continued ...</h1>
+                <p>We Are On It ...</p>
+                <button><a href="{{ url_for('root') }}">Back</a></button></center>
+            </div>
+            <div class="row">
+                
+                <div class="card card3"> 
+                   
+                </div>
+               
+            </div>
+        </div>
+    
+       
+    </div>
 
-    <center>
-      <div class="col">
-        <button><a href="{{ url_for('root') }}">Back</a></button> 
-      </div>
-    </center>
-  </body>
+   
+     
+    
+  
+</body>
+</html>

@@ -8,30 +8,38 @@
 <body>
     <div class="container">
         <div class="navbar">
-            <img src="{{ url_for('static',filename='edem.png') }}" class="logo">
+            <img src="{{ url_for('static',filename='logo.png') }}" class="logo">
             <nav>
                 <ul>
-                    <li><a href="">HOME</a></li>
+                    <li><a href="{{ url_for('root') }}">HOME</a></li>
                     <li><a href="">ABOUT</a></li>
                     <li><a href="">CONTACT US</a></li>
                 </ul>
             </nav>
             <img src="{{ url_for('static',filename='menu.png') }}" class="menu-icon">
         </div>
-        <center>
         <div class="row">
             <div class="col">
-                <h1>START</h1>
-                <p>Start sentiment analysis capture </p>
-                <button><a href="{{ url_for('capture') }}">CAMERA</a></button>
+                <center><h1>WE ARE UFACE</h1>
+                <p>Thanks to the AI technology, we have developed an educational application <br>
+                    that monitors the audience's reaction in real time. We are a young<br> but 
+                    entrepreneurial team, enthusiastic about making<br> a positive impact in the digital world.</p></center>
             </div>
-            <div class="col">
-                <h1>RESULTS</h1>
-                <p>Sentiment analysis results</p>
-                <button><a href="{{ url_for('dashboard') }}">DASHBOARD</a></button>
+            <div class="row">
+                
+                <div class="card card1"> 
+                    <center><a href="{{ url_for('capture') }}"><h3>Camera</h3></a></center>
+                </div>
+                
+                <div class="card card2">
+                    
+                    <center><a href="{{ url_for('dashboard') }}"><h3>Dashboard</h3></a></center>
+                </div>
             </div>
+                
+               
         </div>
-        <center>
+    
 
     </div>
 </body>

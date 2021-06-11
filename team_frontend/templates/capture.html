@@ -9,10 +9,10 @@
 <body>
     <div class="container">
         <div class="navbar">
-            <img src="{{ url_for('static',filename='edem.png') }}" class="logo">
+            <img src="{{ url_for('static',filename='logo.png') }}" class="logo">
             <nav>
                 <ul>
-                    <li><a href="">HOME</a></li>
+                    <li><a href="{{ url_for('root') }}">HOME</a></li>
                     <li><a href="">ABOUT</a></li>
                     <li><a href="">CONTACT US</a></li>
                     <h1>{{emotion}}</h1>
@@ -21,17 +21,28 @@
             <img src="{{ url_for('static',filename='menu.png') }}" class="menu-icon">
         </div>
 
-    <center>
-      <div id="camera">
-        <img src="{{ url_for('video_feed') }}" alt="video feed">
-      </div>
-      <div id="camera2">
-	     <img src="{{ url_for('static', filename=path) }}" alt="capture">
-      </div>
-      <div class="col">
-        <button><a href="{{ url_for('root') }}">Back</a></button> 
-        <button><a href="{{ url_for('capture') }}">Take a photo</a></button>
-      </div>
-    </center>
+        <div class="row">
+          <div class="col">
+              <h2>You are {{emotion}} </h2>
+
+              <div id="camera2">
+                <button><a href="{{ url_for('root') }}">Back</a></button> 
+                <button><a href="{{ url_for('capture') }}">Take a photo</a></button>
+                <img src="{{ url_for('static', filename=path) }}" alt="capture" width="380" height="220">
+                
+              </div>
+          </div>
+        
+
+          <div class="col">
+            <div id="camera">
+              <img src="{{ url_for('video_feed') }}" alt="video feed" width="680" height="380">
+              
+            </div>           
+          </div>
+        
+        </div>
+    </div>
+
   </body>
 </html>
