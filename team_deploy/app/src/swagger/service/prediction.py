@@ -15,27 +15,13 @@ metrics_model = namespace.model('metrics', {
 })
 
 prediction_model = namespace.model('prediction', {
-    'emotions': fields.String(
+    'creationDate': fields.String(
         readonly=True,
-        description='Array about emotions'
+        description='Timestamp'
     ),
-    'Gender': fields.String(
+    'message': fields.String(
         readonly=True,
-        description='Gender'
-    ),
-    'Age': fields.Integer(
-        readonly=True,
-        description='Age'
-    ),
-    'Race': fields.Integer(
-        readonly=True,
-        description='Age'
-    ),
-    'model_metrics': fields.Nested(
-        metrics_model,
-        readonly=True,
-        description='Age',
-        as_list=True
+        description='base64 image'
     )
 })
 
